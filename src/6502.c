@@ -44,8 +44,6 @@ int main(int argc, char *argv[]){
     reset(&cpu, memory);
     cpu.CLOCK = 1000;
 
-    cpu.Y = 2;
-
     while (memory[cpu.PC] != 0){
         uint8_t opcode = memory[cpu.PC];
         cpu.PC++;
@@ -64,6 +62,15 @@ int main(int argc, char *argv[]){
             case 0xB1:
                 printf("LDA\n");
                 LDA(&cpu, memory, opcode);
+                break;
+
+            case 0xA2:
+            case 0xA6:
+            case 0xB6:
+            case 0xAE:
+            case 0xBE:
+                printf("LDX\n");
+                LDX(&cpu, memory, opcode);
                 break;
 
         }
