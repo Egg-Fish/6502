@@ -23,7 +23,7 @@ void print_cpu_status(CPU cpu, FILE *f){
 void hex_dump(void *m, uint16_t start, uint16_t end, FILE *f){
     uint8_t *memory = (uint8_t *)m;
 
-    fprintf(f, "\n");
+    fprintf(f, "\n\n");
     fprintf(f, "ADDRSS:  0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F\n");
 
     fprintf(f, "%#06x: ", start);
