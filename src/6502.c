@@ -33,7 +33,7 @@ int main(int argc, char *argv[]){
     memory = malloc(MAX_MEMORY);
     memset(memory, 0, MAX_MEMORY);
 
-    // Load Test Program
+    // Load Program
     FILE *fp = fopen(argv[1], "rb");
 
     for (int i = 0; i < MAX_MEMORY; i++){
@@ -159,11 +159,7 @@ int main(int argc, char *argv[]){
     
     print_cpu_status(cpu, f);
 
-    hex_dump(memory, 0x0000, 0x0010, f);
-
-    hex_dump(memory, 0x0200, 0x0210, f);
-
-    hex_dump(memory, 0x8000, 0x8020, f);
+    hex_dump(memory, 0x0000, 0xFFFF, f);
 
     fclose(f);
 

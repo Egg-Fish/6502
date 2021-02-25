@@ -22,4 +22,6 @@ clean:
 
 cleanlogs:
 	rm logs/test/*_test/*.log
+	rm logs/test/*.log
+	rm logs/*.log 
 
