@@ -8,6 +8,7 @@
 #include "loadstore.h"
 
 #define MAX_MEMORY 65536 //address 0000(0) to FFFF(65535)
+#define CLOCK_SPEED 100
 
 /*
  0000-00FF  - RAM for Zero-Page & Indirect-Memory Addressing
@@ -32,7 +33,7 @@ int main(int argc, char *argv[]){
     memset(memory, 0, MAX_MEMORY);
 
     // Load Test Program
-    FILE *fp = fopen("P:/C/6502/test/testprogram", "rb");
+    FILE *fp = fopen(argv[1], "rb");
 
     for (int i = 0; i < MAX_MEMORY; i++){
         uint8_t x = fgetc(fp);
@@ -41,17 +42,31 @@ int main(int argc, char *argv[]){
 
     fclose(fp);
 
+
+    //Initialise CPU
     reset(&cpu, memory);
-    cpu.CLOCK = 1000;
+    cpu.CLOCK = CLOCK_SPEED;
+
+    //Logging Info
+    FILE *f;
+    char location[100] = "logs/";
+    strcat(location, argv[1]);
+    strcat(location, ".log");
+
+    printf("Log Location = %s\n", location);
+    f = fopen(location, "w+");
+
+
 
     while (memory[cpu.PC] != 0){
         uint8_t opcode = memory[cpu.PC];
         cpu.PC++;
 
-        printf("\nADDRESS: %04x\nOPCODE: %02x\nExecuting ", cpu.PC-1, opcode);
+        fprintf(f, "\nADDRESS: %04x\nOPCODE: %02x\nExecuting ", cpu.PC-1, opcode);
 
         //Main Switch
         switch (opcode){
+            //--------LDX--------
             case 0xA9:
             case 0xA5:
             case 0xB5:
@@ -60,26 +75,69 @@ int main(int argc, char *argv[]){
             case 0xB9:
             case 0xA1:
             case 0xB1:
-                printf("LDA\n");
+                fprintf(f, "LDA\n");
                 LDA(&cpu, memory, opcode);
                 break;
 
+            //--------LDX--------
             case 0xA2:
             case 0xA6:
             case 0xB6:
             case 0xAE:
             case 0xBE:
-                printf("LDX\n");
+                fprintf(f, "LDX\n");
                 LDX(&cpu, memory, opcode);
                 break;
 
+            //--------LDY--------
+            case 0xA0:
+            case 0xA4:
+            case 0xB4:
+            case 0xAC:
+            case 0xBC:
+                fprintf(f, "LDY\n");
+                LDY(&cpu, memory, opcode);
+                break;
+
+            //--------STA--------
+            case 0x85:
+            case 0x95:
+            case 0x8D:
+            case 0x9D:
+            case 0x99:
+            case 0x81:
+            case 0x91:
+                fprintf(f, "STA\n");
+                STA(&cpu, memory, opcode);
+                break;
+
+            //--------STX--------
+            case 0x86:
+            case 0x96:
+            case 0x8E:
+                fprintf(f, "STX\n");
+                STX(&cpu, memory, opcode);
+                break;
+
+            //--------STY--------
+            case 0x84:
+            case 0x94:
+            case 0x8C:
+                fprintf(f, "STY\n");
+                STY(&cpu, memory, opcode);
+                break;
         }
 
         Sleep(cpu.CLOCK);
     }
     
-    print_cpu_status(cpu);
-    hex_dump(memory, 0x8000, 0x8010);
+    print_cpu_status(cpu, f);
+
+    hex_dump(memory, 0x0000, 0x0010, f);
+
+    hex_dump(memory, 0x0200, 0x0210, f);
+
+    fclose(f);
 
     free(memory);
 

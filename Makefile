@@ -20,3 +20,6 @@ clean:
 	rm obj/*
 	rm bin/*.exe
 
+cleanlogs:
+	rm logs/test/*_test/*.log
+

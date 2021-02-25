@@ -22,8 +22,8 @@ typedef struct CPU{
     uint16_t CLOCK;
 } CPU;
 
-void print_cpu_status(CPU cpu);
-void hex_dump(void *m, uint16_t start, uint16_t end);
+void print_cpu_status(CPU cpu, FILE *f);
+void hex_dump(void *m, uint16_t start, uint16_t end, FILE *f);
 void reset(CPU *cpu, void *m);
 
 
