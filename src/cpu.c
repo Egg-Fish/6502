@@ -6,7 +6,7 @@
 void print_cpu_status(CPU cpu, FILE *f){
     fprintf(f, "Pointers: \n");
     fprintf(f, "PC: %04x\n", cpu.PC);
-    fprintf(f, "SP: %04x\n", cpu.SP);
+    fprintf(f, "SP: %02x\n", cpu.SP);
 
     fprintf(f, "\nRegisters: \n");
 

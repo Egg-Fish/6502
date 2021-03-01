@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include "cpu.h"
+#include "register.h"
 
 void TAX(CPU *cpu, void *m, uint8_t opcode){
     cpu->X = cpu->A; //Implied Addressing

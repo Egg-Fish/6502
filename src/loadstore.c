@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include "cpu.h"
+#include "loadstore.h"
 
 uint16_t indexed_indirect(CPU *cpu, uint8_t *memory, uint8_t addr){
     uint16_t location;

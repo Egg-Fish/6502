@@ -7,6 +7,7 @@
 #include "cpu.h"
 #include "loadstore.h"
 #include "register.h"
+#include "stack.h"
 
 #define MAX_MEMORY 65536 //address 0000(0) to FFFF(65535)
 #define CLOCK_SPEED 100
@@ -128,6 +129,7 @@ int main(int argc, char *argv[]){
                 STY(&cpu, memory, opcode);
                 break;
 
+
             //--------TAX--------
             case 0xAA:
                 fprintf(f, "TAX\n");
@@ -152,6 +154,43 @@ int main(int argc, char *argv[]){
                 TYA(&cpu, memory, opcode);
                 break;
             
+
+            //--------TSX--------
+            case 0xBA:
+                fprintf(f, "TSX\n");
+                TSX(&cpu, memory, opcode);
+                break;
+
+            //--------TXS--------
+            case 0x9A:
+                fprintf(f, "TXS\n");
+                TXS(&cpu, memory, opcode);
+                break;
+
+            //--------PHA--------
+            case 0x48:
+                fprintf(f, "PHA\n");
+                PHA(&cpu, memory, opcode);
+                break;
+            
+            //--------PHP--------
+            case 0x08:
+                fprintf(f, "PHP\n");
+                PHP(&cpu, memory, opcode);
+                break;
+
+            //--------PLA--------
+            case 0x68:
+                fprintf(f, "PLA\n");
+                PLA(&cpu, memory, opcode);
+                break;
+
+            //--------PLP--------
+            case 0x28:
+                fprintf(f, "PLP\n");
+                PLP(&cpu, memory, opcode);
+                break;
+
         }
 
         Sleep(cpu.CLOCK);
