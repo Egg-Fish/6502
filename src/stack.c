@@ -28,7 +28,7 @@ void PHP(CPU *cpu, void *m, uint8_t opcode){
     uint8_t *memory = (uint8_t *)m;
     uint16_t location = 0x0100 | cpu->SP;
 
-    uint8_t flags = (cpu->N << 7) | (cpu->V << 6) | (0 << 5) | (cpu->B << 4) | (cpu->D << 3) | (cpu->I << 2) | (cpu->Z << 1) | (cpu->C);
+    uint8_t flags = (cpu->N << 7) | (cpu->V << 6) | (1 << 5) | (cpu->B << 4) | (cpu->D << 3) | (cpu->I << 2) | (cpu->Z << 1) | (cpu->C);
 
     memory[location] = flags;
     (cpu->SP)--;

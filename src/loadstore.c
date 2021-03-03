@@ -6,30 +6,6 @@
 #include "cpu.h"
 #include "loadstore.h"
 
-uint16_t indexed_indirect(CPU *cpu, uint8_t *memory, uint8_t addr){
-    uint16_t location;
-    uint8_t lb, hb;
-
-    lb = memory[(addr + cpu->X)% 0x100];
-    hb = memory[(addr + cpu->X + 1) % 0x100];
-
-    location = (hb << 8) | lb;
-
-    return location;
-}
-
-uint16_t indirect_indexed(CPU *cpu, uint8_t *memory, uint8_t addr){
-    uint16_t location;
-    uint8_t lb, hb;
-
-    lb = memory[(addr)% 0x100];
-    hb = memory[(addr + 1) % 0x100];
-
-    location = (hb << 8) | lb;
-
-    return location + cpu->Y;
-}
-
 void LDA(CPU *cpu, void *m, uint8_t opcode){
     uint8_t *memory = (uint8_t *)m;
 

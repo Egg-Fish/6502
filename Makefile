@@ -25,3 +25,8 @@ cleanlogs:
 	rm logs/test/*.log
 	rm logs/*.log 
 
+count: $(SOURCEFILES)
+	test/counter.exe $^
+
+counter:
+	$(CC) test/main.c -o test/counter.exe

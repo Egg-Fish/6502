@@ -26,6 +26,8 @@ void print_cpu_status(CPU cpu, FILE *f);
 void hex_dump(void *m, uint16_t start, uint16_t end, FILE *f);
 void reset(CPU *cpu, void *m);
 
+uint16_t indexed_indirect(CPU *cpu, uint8_t *memory, uint8_t addr);
+uint16_t indirect_indexed(CPU *cpu, uint8_t *memory, uint8_t addr);
 
 
 

@@ -46,3 +46,27 @@ void reset(CPU *cpu, void *m){
     cpu->A = cpu->X = cpu->Y = 0;
     cpu->C = cpu->Z = cpu->I = cpu->D = cpu->B = cpu->V = cpu->N = 0;
 }
+
+uint16_t indexed_indirect(CPU *cpu, uint8_t *memory, uint8_t addr){
+    uint16_t location;
+    uint8_t lb, hb;
+
+    lb = memory[(addr + cpu->X)% 0x100];
+    hb = memory[(addr + cpu->X + 1) % 0x100];
+
+    location = (hb << 8) | lb;
+
+    return location;
+}
+
+uint16_t indirect_indexed(CPU *cpu, uint8_t *memory, uint8_t addr){
+    uint16_t location;
+    uint8_t lb, hb;
+
+    lb = memory[(addr)% 0x100];
+    hb = memory[(addr + 1) % 0x100];
+
+    location = (hb << 8) | lb;
+
+    return location + cpu->Y;
+}

@@ -8,6 +8,7 @@
 #include "loadstore.h"
 #include "register.h"
 #include "stack.h"
+#include "logical.h"
 
 #define MAX_MEMORY 65536 //address 0000(0) to FFFF(65535)
 #define CLOCK_SPEED 100
@@ -68,6 +69,7 @@ int main(int argc, char *argv[]){
 
         //Main Switch
         switch (opcode){
+            //----------------LOADSTORE----------------
             //--------LDX--------
             case 0xA9:
             case 0xA5:
@@ -129,7 +131,7 @@ int main(int argc, char *argv[]){
                 STY(&cpu, memory, opcode);
                 break;
 
-
+            //----------------REGISTER----------------
             //--------TAX--------
             case 0xAA:
                 fprintf(f, "TAX\n");
@@ -154,7 +156,7 @@ int main(int argc, char *argv[]){
                 TYA(&cpu, memory, opcode);
                 break;
             
-
+            //----------------STACK----------------
             //--------TSX--------
             case 0xBA:
                 fprintf(f, "TSX\n");
@@ -189,6 +191,54 @@ int main(int argc, char *argv[]){
             case 0x28:
                 fprintf(f, "PLP\n");
                 PLP(&cpu, memory, opcode);
+                break;
+
+
+            //----------------LOGICAL----------------
+            //--------AND--------
+            case 0x29:
+            case 0x25:
+            case 0x35:
+            case 0x2D:
+            case 0x3D:
+            case 0x39:
+            case 0x21:
+            case 0x31:
+                fprintf(f, "AND\n");
+                AND(&cpu, memory, opcode);
+                break;
+
+            //--------EOR--------
+            case 0x49: 
+            case 0x45: 
+            case 0x55:
+            case 0x4D:
+            case 0x5D: 
+            case 0x59:
+            case 0x41:
+            case 0x51:
+                fprintf(f, "EOR\n");
+                EOR(&cpu, memory, opcode);
+                break;
+
+            //--------ORA--------
+            case 0x09:
+            case 0x05:
+            case 0x15:
+            case 0x0D:
+            case 0x1D:
+            case 0x19:
+            case 0x01:
+            case 0x11:
+                fprintf(f, "ORA\n");
+                ORA(&cpu, memory, opcode);
+                break;
+
+            //--------BIT--------
+            case 0x24:
+            case 0x2C:
+                fprintf(f, "BIT\n");
+                BIT(&cpu, memory, opcode);
                 break;
 
         }
